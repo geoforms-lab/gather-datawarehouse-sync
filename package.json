@@ -1,0 +1,22 @@
+{
+  "name": "gather-datawarehouse-sync",
+  "version": "1.0.0",
+  "description": "syncs a filesystem with an instance of gather",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickolanack/gather-datawarehouse-sync.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nickolanack/gather-datawarehouse-sync/issues"
+  },
+  "homepage": "https://github.com/nickolanack/gather-datawarehouse-sync#readme",
+  "dependencies": {
+    "chokidar": "^3.5.2"
+  }
+}

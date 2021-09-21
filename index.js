@@ -1,9 +1,10 @@
 
 
+const EventEmitter = require("events");
 const chokidar = require('chokidar');
 const config=require("./config.json")
 
-class Sync{
+class Sync extends EventEmitter{
 
 
 
@@ -27,11 +28,36 @@ class Sync{
 				counter++;
 				
 				this._addPath(path.split(config.path).pop());
-				this._buildTreeOnIdle();
+				this._checkIdle();
 			}
 
 
 		});
+
+	}
+
+
+
+	getCategories(fn){
+
+
+		this._onIdle(()=>{
+
+			
+
+		});
+
+
+	}
+
+	_onIdle(fn){
+
+		if(this._isIdle){
+			fn();
+			return;
+		}
+
+		this.on('idle', fn);
 
 	}
 
@@ -60,19 +86,21 @@ class Sync{
 
 	}
 
-	_buildTreeOnIdle(){
+	_checkIdle(){
 
 		if(this._idleTimer){
 			clearTimeout(this._idleTimer);
 		}
 
 		this._idleTimer=setTimeout(()=>{
+			
 			delete this._idleTimer;
 
-			console.log(JSON.stringify(this._tree , null, '   '));
-			console.log(JSON.stringify(this._flattenTreeChildrenBFS(this._tree) , null, '   '))
+			this.emit('idle');
 
-			console.log(this._toSql(this._flattenTreeChildrenBFS(this._tree)));
+			// console.log(JSON.stringify(this._tree , null, '   '));
+			// console.log(JSON.stringify(this._flattenTreeChildrenBFS(this._tree) , null, '   '))
+			// console.log(this._toSql(this._flattenTreeChildrenBFS(this._tree)));
 
 		}, 1000);
 	}
@@ -170,4 +198,9 @@ class Sync{
 
 }
 
-new Sync(config);
+(new Sync(config)).getCategories();
+
+
+
+
+

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nickolanack/gather-datawarehouse-sync#readme",
   "dependencies": {
-    "chokidar": "^3.5.2"
+    "chokidar": "^3.5.2",
+    "gather-node-client": "../gather-node-client/"
   }
 }

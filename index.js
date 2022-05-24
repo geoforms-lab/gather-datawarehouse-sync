@@ -11,6 +11,7 @@ new GatherClient(credentials, config, (client) => {
 	(new Sync(config, client)).syncFilesystem().then((sync)=>{
 
 		return sync.syncCategories().then(()=>{
+			console.log('Finished')
 			process.exit(0);
 		})
 

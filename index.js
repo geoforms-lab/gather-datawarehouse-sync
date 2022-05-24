@@ -1,29 +1,21 @@
-
+const credentials = require("./credentials.json");
 const config = require("./config.json")
-const Sync=require("./src/DataWarehouse.js");
+const Sync = require("./src/DataWarehouse.js");
 
 
-(new Sync(config)).getCategories().then((warehouse) => {
 
-	const credentials = require("./credentials.json");
 
-	if (config.ignoreCertError === true) {
-		process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
-	}
-	const GatherClient = require("gather-node-client");
+const GatherClient = require("gather-node-client");
+new GatherClient(credentials, config, (client) => {
 
-	const client = (new GatherClient(credentials, config, () => {
+	(new Sync(config, client)).syncFilesystem().then((sync)=>{
 
-		console.log('list');
-		// client.listCategories().then((list) => {
-		// 	console.log(list);
-		// });
-		// 
-		client.listProjects().then((list) => {
-			console.log(list);
-		});
+		return sync.syncCategories().then(()=>{
+			process.exit(0);
+		})
 
-	}));
+	})
 
+	
 
 });
